@@ -103,18 +103,45 @@ class PricingController extends Controller
              ['fuel_surcharge' => $request->fulesurcharge,
              'docket_charge' => $request->docketcharges,
              'risk_on_val' => $request->rikk_on_val,
+
              'oda_min' => $request->min_oda,
              'min_weight' => $request->min_kg,
              'payment_term' => $request->payment_terms,
              'oda_pkg' => $request->per_kg_oda,
-             'gst' => $request->gst,
              'min_freight' => $request->min_freight,
+             'fod' => $request->fod,
+             'cod' => $request->cod,
+             'gst' => $request->gst,
+             'owner_risk_kg' => $request->owner_risk_kg,
+             'owner_risk_min' => $request->owner_risk_min,
+             'carrier_risk_kg' => $request->carrier_risk_kg,
+             'carrier_risk_min' => $request->carrier_risk_min,
+             'opu_kg' => $request->opu_kg,
+             'opu_min' => $request->opu_min,
+             'ossh_kg' => $request->ossh_kg,
+             'ossh_min' => $request->ossh_min,
+             'ossh_max' => $request->ossh_max,
+             'daspat_kg' => $request->daspat_kg,
+             'daspat_min' => $request->daspat_min,
+             'sezd_kg' => $request->sezd_kg,
+             'sezd_min' => $request->sezd_min,
+             'csd_kg' => $request->csd_kg,
+             'csd_min' => $request->csd_min,
+             'gcd_kg' => $request->gcd_kg,
+             'gcd_min' => $request->gcd_min,
+             'hfd' => $request->hfd,
+             'green_tax_kg' => $request->green_tax_kg,
+             'green_tax_min' => $request->green_tax_min,
+             'demurrage' => $request->demurrage,
+             'm_charges' => $request->m_charges,
              ]
 
         );
 
 
-       Alert::success('Vas Charges Upddted', 'Successfully');         
+
+
+       Alert::success('Vas Charges Updated', 'Successfully');         
          return redirect('pricing');
        }
    

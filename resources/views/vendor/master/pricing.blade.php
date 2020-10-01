@@ -149,20 +149,33 @@
 					<input type="text" name="docketcharges" class="form-control"value="{{@$vascharge->docket_charge}}"  placeholder="0" id="zalias">
 				</div>
 
+
 				<div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
-					<label class="control-label mb-10 text-left">Risk on Minimum Value on Owner Risk </label>
-					<input type="text" name="rikk_on_val" class="form-control" value="{{@$vascharge->risk_on_val}}"placeholder="0">
+					<label class="control-label mb-10 text-left">Owner Risk(Per kg)</label>
+					<input type="text" name="owner_risk_kg" class="form-control" value="{{@$vascharge->owner_risk_kg}}"placeholder="0">
+				</div>
+				
+				<div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
+					<label class="control-label mb-10 text-left">Owner Risk (Min) </label>
+					<input type="text" name="owner_risk_min" class="form-control" value="{{@$vascharge->owner_risk_min}}"placeholder="0">
 				</div>
 
 				<div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
-					<label class="control-label mb-10 text-left">Minimum charge in kgs </label>
+					<label class="control-label mb-10 text-left">Carrier Risk (Per kg) </label>
+					<input type="text" name="carrier_risk_kg" class="form-control" value="{{@$vascharge->carrier_risk_kg}}"placeholder="0">
+				</div>
+				
+				<div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
+					<label class="control-label mb-10 text-left">Carrier Risk (min) </label>
+					<input type="text" name="carrier_risk_min" class="form-control" value="{{@$vascharge->carrier_risk_min}}"placeholder="0">
+				</div>
+				
+				<div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
+					<label class="control-label mb-10 text-left">Minimum charge in kg </label>
 					<input type="text" name="min_kg" class="form-control"placeholder="0" value="{{@$vascharge->min_weight}}">
 				</div>
 
-				<div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
-					<label class="control-label mb-10 text-left">GST (IN %) </label>
-					<input type="text" name="gst" class="form-control"placeholder="0"  value="{{@$vascharge->gst}}">
-				</div>
+
 
 				<div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
 					<label class="control-label mb-10 text-left">Minumum ODA  </label>
@@ -174,6 +187,16 @@
 					<input type="text" name="per_kg_oda" class="form-control" placeholder="0" value="{{@$vascharge->oda_pkg}}">
 				</div>
 
+				<div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
+					<label class="control-label mb-10 text-left">FOD </label>
+					<input type="text" name="fod" class="form-control" placeholder="0" value="{{@$vascharge->fod}}">
+				</div>
+
+				<div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
+					<label class="control-label mb-10 text-left"> COD </label>
+					<input type="text" name="cod" class="form-control" placeholder="0" value="{{@$vascharge->cod}}">
+				</div>
+
 
 				<div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
 					<label class="control-label mb-10 text-left">MINIMUM FREIGHT</label>
@@ -183,91 +206,91 @@
 
 <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
 	<label class="control-label mb-10 text-left">Outstation pick-up (per kg)</label>
-	<input type="text" name="payment_terms" class="form-control" placeholder="0" value="{{@$vascharge->payment_term}}">
+	<input type="text" name="opu_kg" class="form-control" placeholder="0" value="{{@$vascharge->opu_kg}}">
 </div>
 
 <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
 	<label class="control-label mb-10 text-left">Outstation pick-up (min)</label>
-	<input type="text" name="payment_terms" class="form-control" placeholder="0" value="{{@$vascharge->payment_term}}">
+	<input type="text" name="opu_min" class="form-control" placeholder="0" value="{{@$vascharge->opu_min}}">
 </div>
 
 <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
 	<label class="control-label mb-10 text-left">Odd Shape Shipment Handling (per kg) </label>
-	<input type="text" name="payment_terms" class="form-control" placeholder="0" value="{{@$vascharge->payment_term}}">
+	<input type="text" name="ossh_kg" class="form-control" placeholder="0" value="{{@$vascharge->ossh_kg}}">
 </div>
 
 <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
 	<label class="control-label mb-10 text-left">Odd Shape Shipment Handling (Min) </label>
-	<input type="text" name="payment_terms" class="form-control" placeholder="0" value="{{@$vascharge->payment_term}}">
+	<input type="text" name="ossh_min" class="form-control" placeholder="0" value="{{@$vascharge->ossh_min}}">
 </div>
 
 <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
 	<label class="control-label mb-10 text-left">Odd Shape Shipment Handling (Max) </label>
-	<input type="text" name="payment_terms" class="form-control" placeholder="0" value="{{@$vascharge->payment_term}}">
+	<input type="text" name="ossh_max" class="form-control" placeholder="0" value="{{@$vascharge->ossh_max}}">
 </div>
 
 
 <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
 	<label class="control-label mb-10 text-left">Delivery as per appointed time (Per kg) </label>
-	<input type="text" name="payment_terms" class="form-control" placeholder="0" value="{{@$vascharge->payment_term}}">
+	<input type="text" name="daspat_kg" class="form-control" placeholder="0" value="{{@$vascharge->daspat_kg}}">
 </div>
 <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
 	<label class="control-label mb-10 text-left">Delivery as per appointed time(Min)</label>
-	<input type="text" name="payment_terms" class="form-control" placeholder="0" value="{{@$vascharge->payment_term}}">
+	<input type="text" name="daspat_min" class="form-control" placeholder="0" value="{{@$vascharge->daspat_min}}">
 </div>
 
 
 <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
 	<label class="control-label mb-10 text-left">Special Eco Zone Delivery (Per kg) </label>
-	<input type="text" name="payment_terms" class="form-control" placeholder="0" value="{{@$vascharge->payment_term}}">
+	<input type="text" name="sezd_kg" class="form-control" placeholder="0" value="{{@$vascharge->sezd_kg}}">
 </div>
 
 <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
 	<label class="control-label mb-10 text-left">Special Eco Zone Delivery (Min)</label>
-	<input type="text" name="payment_terms" class="form-control" placeholder="0" value="{{@$vascharge->payment_term}}">
+	<input type="text" name="sezd_min" class="form-control" placeholder="0" value="{{@$vascharge->sezd_min}}">
 </div>
 
 <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
 	<label class="control-label mb-10 text-left">Canteen (CSD) Delivery (Per kg) </label>
-	<input type="text" name="payment_terms" class="form-control" placeholder="0" value="{{@$vascharge->payment_term}}">
+	<input type="text" name="csd_kg" class="form-control" placeholder="0" value="{{@$vascharge->csd_kg}}">
 </div>
 <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
 	<label class="control-label mb-10 text-left">Canteen (CSD) Delivery (Min)</label>
-	<input type="text" name="payment_terms" class="form-control" placeholder="0" value="{{@$vascharge->payment_term}}">
+	<input type="text" name="csd_min" class="form-control" placeholder="0" value="{{@$vascharge->csd_min}}">
 </div>
 
 
 <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
 	<label class="control-label mb-10 text-left">Govt Compound Delivery (Per kg )</label>
-	<input type="text" name="payment_terms" class="form-control" placeholder="0" value="{{@$vascharge->payment_term}}">
+	<input type="text" name="gcd_kg" class="form-control" placeholder="0" value="{{@$vascharge->gcd_kg}}">
 </div>
 
 <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
 	<label class="control-label mb-10 text-left">Govt Compound Delivery(Min)</label>
-	<input type="text" name="payment_terms" class="form-control" placeholder="0" value="{{@$vascharge->payment_term}}">
+	<input type="text" name="gcd_min" class="form-control" placeholder="0" value="{{@$vascharge->gcd_min}}">
 </div>
 
 
 <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
 	<label class="control-label mb-10 text-left">Higher Floor Delivery</label>
-	<input type="text" name="payment_terms" class="form-control" placeholder="0" value="{{@$vascharge->payment_term}}">
+	<input type="text" name="hfd" class="form-control" placeholder="0" value="{{@$vascharge->hfd}}">
 </div>
 
 
 <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
 	<label class="control-label mb-10 text-left">Green Tax (per kg)</label>
-	<input type="text" name="payment_terms" class="form-control" placeholder="0" value="{{@$vascharge->payment_term}}">
+	<input type="text" name="green_tax_kg" class="form-control" placeholder="0" value="{{@$vascharge->green_tax_kg}}">
 </div>
 
 <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
 	<label class="control-label mb-10 text-left">Green Tax (Min) </label>
-	<input type="text" name="payment_terms" class="form-control" placeholder="0" value="{{@$vascharge->payment_term}}">
+	<input type="text" name="green_tax_min" class="form-control" placeholder="0" value="{{@$vascharge->green_tax_min}}">
 </div>
 
 
 <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
 	<label class="control-label mb-10 text-left">Demurrage</label>
-	<input type="text" name="payment_terms" class="form-control" placeholder="0" value="{{@$vascharge->payment_term}}">
+	<input type="text" name="demurrage" class="form-control" placeholder="0" value="{{@$vascharge->demurrage}}">
 </div>
 
 <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
@@ -281,9 +304,15 @@
 
 
 
-<div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
+<div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6">
 	<label class="control-label mb-10 text-left">Miscellaneous Charges</label>
-	<input type="text" name="payment_terms" class="form-control" placeholder="Payment Terms" value="{{@$vascharge->payment_term}}">
+	<input type="text" name="m_charges" class="form-control" placeholder="0" value="{{@$vascharge->m_charges}}">
+
+</div>
+
+<div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 ">
+	<label class="control-label mb-10 text-left">GST (IN %) </label>
+	<input type="text" name="gst" class="form-control"placeholder="0"  value="{{@$vascharge->gst}}">
 </div>
 
 
@@ -293,7 +322,7 @@
 
 
 
-<button type="submit" class="btn btn-success btn-anim disabled" ><i class="icon-rocket"></i><span class="btn-text">Update</span></button>
+<button type="submit" class="btn btn-success btn-anim disabled" style="margin:30px" ><i class="icon-rocket"></i><span class="btn-text">Update</span></button>
 		
 
 			</form>

@@ -29,7 +29,6 @@ Route::resource('zone','Vendor\ZoneController');
 Route::resource('pin-code','Vendor\PincondeController');
 Route::resource('plan','Vendor\PlansController');
 
-
 Route::get('pricing','Vendor\PricingController@pricelist');
 Route::post('surface-price','Vendor\PricingController@surfaceprice');
 Route::post('air-prices','Vendor\PricingController@airprice');

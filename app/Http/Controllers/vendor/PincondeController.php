@@ -31,7 +31,7 @@ class PincondeController extends Controller
      */
     public function create()
     {
-        $zones=ZoneModel::where('created_by','=',Auth::user()->id)->where('status','=','1')->pluck('name','id');
+        $zones=ZoneModel::where('status','=','1')->pluck('name','id');
         return view('vendor/master/addpincode',compact('zones'));
 
     }
@@ -106,7 +106,7 @@ class PincondeController extends Controller
      */
     public function edit($id)
     {
-       $zones=ZoneModel::where('created_by','=',Auth::user()->id)->where('status','=','1')->pluck('name','id'); 
+       $zones=ZoneModel::where('status','=','1')->pluck('name','id'); 
 
          $data=PincodeModel::where('created_by','=',Auth::user()->id)->where('id','=',$id)->first();
       

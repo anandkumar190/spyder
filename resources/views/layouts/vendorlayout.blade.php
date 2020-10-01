@@ -350,9 +350,7 @@
 				<li>
 					<a href="javascript:void(0);" data-toggle="collapse" data-target="#dashboard_dr"><div class="pull-left"><i class="zmdi zmdi-landscape mr-20"></i><span class="right-nav-text">Master</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
 					<ul id="dashboard_dr" class="collapse collapse-level-1">
-						<li>
-							<a href="{{url('zone')}}">Zones</a>
-						</li>
+					
 						<li>
 							<a href="{{url('pin-code')}}">Pincodes</a>
 						</li>
@@ -368,6 +366,10 @@
 				<li>
 					<a href="javascript:void(0);" data-toggle="collapse" data-target="#dashboard_ch"><div class="pull-left"><i class="zmdi zmdi-apps mr-20"></i><span class="right-nav-text">Manage</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
 					<ul id="dashboard_ch" class="collapse collapse-level-1">
+						<li>
+							<a href="{{url('zone')}}">Zones</a>
+						</li>
+
 						<li>
 							<a href="{{url('all-vendor')}}">Vendors </a>
 						</li>

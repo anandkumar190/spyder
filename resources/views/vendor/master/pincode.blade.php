@@ -138,6 +138,7 @@
 			<th>Is Prepaid</th>
 			<th>Is Delivery</th>
 			<th>Is Pickup</th>
+			<th>Is Oda</th>
 			<th>Status</th>
 			<th>Action</th>
 		</tr>
@@ -162,32 +163,24 @@
 				  <div class="modal-dialog" role="document">
 				    <div class="modal-content">
 				      <div class="modal-header">
-				        <h5 class="modal-title" id="exampleModalLabel"> Pincode Csv Import </h5>
+				        <h5 class="modal-title" id="exampleModalLabel">Pincode Csv Import </h5>
 				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				          <span aria-hidden="true">&times;</span>
 				        </button>
 				      </div>
+				   <form action="/action_page.php">
 				      <div class="modal-body">
-
 				         <div class="container mt-3">
-				      				       
-
-				           <form action="/action_page.php">
-				        				             
-				         
 				             <input type="file" id="myFile" name="filename2">
 				           
-				             <div class="mt-3">
-				               <button type="submit" class="btn btn-primary pull-right">
-				               Submit </button>
-				             </div>
-				           </form>
 				         </div>
 
 				      </div>
 				      <div class="modal-footer">
-				     
+				     <button type="submit" class="btn btn-primary pull-right">
+				     Submit </button>
 				      </div>
+				    </form>
 				    </div>
 				  </div>
 				</div>

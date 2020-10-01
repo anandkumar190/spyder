@@ -19,7 +19,7 @@ class ZoneController extends Controller
     
     public function index()
     {
-        $zones=ZoneModel::where('created_by','=',Auth::user()->id)->get();
+        $zones=ZoneModel::get();
         return view('vendor/master/Zone',compact('zones'));
     }
 

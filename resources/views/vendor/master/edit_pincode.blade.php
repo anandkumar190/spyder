@@ -36,6 +36,25 @@ if($data->is_oda==1){
 	$noda="selected";
 }
 
+
+if($data->is_pickup==1){
+	$ypic="selected";
+	$npic="";
+}else{
+	$ypic="";
+	$npic="selected";
+}
+
+if($data->is_delivery==1){
+	$ydel="selected";
+	$ndel="";
+}else{
+	$ydel="";
+	$ndel="selected";
+}
+
+
+
 if($data->status==1){
 	$active="selected";
 	$inactive="";
@@ -43,6 +62,9 @@ if($data->status==1){
 	$active="";
 	$inactive="selected";
 }
+
+
+
 
 @endphp
 			<!-- Title -->	
@@ -84,7 +106,7 @@ if($data->status==1){
 				<input type="hidden" name="_method" value="put"/>
 				@csrf
 
-				<div class="form-group mt-30 mb-30">
+				<div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
 					<label class="control-label mb-10 text-left">Zone</label>
 					<select name="zone" class="form-control">
                  @foreach($zones as $key=>$val)
@@ -95,18 +117,18 @@ if($data->status==1){
 				</div>
 
 
-				<div class="form-group">
+				<div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
 					<label class="control-label mb-10 text-left">city </label>
 					<input type="text"  name="city" class="form-control" id="city" value="{{ $data->city}}"  placeholder="e.g. Zone1 ">
 				</div>
 
-				<div class="form-group">
+				<div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
 					<label class="control-label mb-10 text-left">Pincode</label>
 					<input type="text" name="Pincode" class="form-control"  value="{{ $data->pincode}}" placeholder="Pincode"  pattern="[0-9]{6}" id="zalias">
 				</div>
 
 
-				<div class="form-group mt-30 mb-30">
+				<div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
 					<label class="control-label mb-10 text-left">Serviceable</label>
 					<select name="serviceable" class="form-control">
 						<option {{$ys}} value="1">Yes</option>
@@ -114,7 +136,30 @@ if($data->status==1){
 					</select>
 				</div>
 
-				<div class="form-group mt-30 mb-30">
+
+
+				<div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
+					<label class="control-label mb-10 text-left">Pickup</label>
+					<select name="is_pickup" class="form-control">
+						<option {{$ypic}} value="1">Yes</option>
+						<option {{$npic}} value="0">No</option>
+					</select>
+				</div>
+
+
+
+
+				<div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
+					<label class="control-label mb-10 text-left">Delivery</label>
+					<select name="is_delivery" class="form-control">
+						<option {{$ydel}} value="1" >Yes</option>
+						<option {{$ndel}} value="0" >No</option>
+					</select>
+
+				</div>
+
+
+				<div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
 					<label class="control-label mb-10 text-left">Cod</label>
 					<select name="cod" class="form-control">
 						<option {{$yc}} value="1">Yes</option>
@@ -123,7 +168,7 @@ if($data->status==1){
 				</div>
 
 
-				<div class="form-group mt-30 mb-30">
+				<div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
 					<label class="control-label mb-10 text-left">Prepaid</label>
 					<select name="prepaid" class="form-control">
 						<option {{$yp}} value="1">Yes</option>
@@ -132,7 +177,7 @@ if($data->status==1){
 				</div>
 
 
-				<div class="form-group mt-30 mb-30">
+				<div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
 					<label class="control-label mb-10 text-left">Is oda</label>
 					<select name="is_oda" class="form-control">
 						<option {{$yoda}} value="1">Yes</option>
@@ -141,11 +186,11 @@ if($data->status==1){
 				</div>
 
 
-				<div class="form-group mt-30 mb-30">
+				<div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
 					<label class="control-label mb-10 text-left">Status</label>
 					<select name="status" class="form-control">
-						<option value="1">Active</option>
-						<option value="2">Inactive</option>
+						<option {{$active}}  value="1">Active</option>
+						<option {{$inactive}} value="2">Inactive</option>
 					</select>
 				</div>
 

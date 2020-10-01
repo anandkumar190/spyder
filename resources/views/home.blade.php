@@ -14,7 +14,7 @@
 											<div class="row">
 												<div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
 													<span class="txt-dark block counter"><span class="counter-anim">2245</span></span>
-													<span class="weight-500 uppercase-font block font-13">Order</span>
+													<span class="weight-500 uppercase-font block font-13">Total Order</span>
 												</div>
 												<div class="col-xs-6 text-center  pl-0 pr-0 data-wrap-right">
 													<i class="icon-user-following data-right-rep-icon txt-light-grey"></i>
@@ -33,7 +33,7 @@
 											<div class="row">
 												<div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
 													<span class="txt-dark block counter"><span class="counter-anim">43</span></span>
-													<span class="weight-500 uppercase-font block">COURIER PROVIDER</span>
+													<span class="weight-500 uppercase-font block">Total COD</span>
 												</div>
 												<div class="col-xs-6 text-center  pl-0 pr-0 data-wrap-right">
 													<i class="icon-control-rewind data-right-rep-icon txt-light-grey"></i>
@@ -99,7 +99,7 @@
 											<div class="row">
 												<div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
 													<span class="txt-dark block counter"><span class="counter-anim">2245</span></span>
-													<span class="weight-500 uppercase-font block font-13">Order</span>
+													<span class="weight-500 uppercase-font block font-13">Order Shipped </span>
 												</div>
 												<div class="col-xs-6 text-center  pl-0 pr-0 data-wrap-right">
 													<i class="icon-user-following data-right-rep-icon txt-light-grey"></i>
@@ -118,7 +118,7 @@
 											<div class="row">
 												<div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
 													<span class="txt-dark block counter"><span class="counter-anim">43</span></span>
-													<span class="weight-500 uppercase-font block">COURIER PROVIDER</span>
+													<span class="weight-500 uppercase-font block">COD Available</span>
 												</div>
 												<div class="col-xs-6 text-center  pl-0 pr-0 data-wrap-right">
 													<i class="icon-control-rewind data-right-rep-icon txt-light-grey"></i>
@@ -184,7 +184,7 @@
 											<div class="row">
 												<div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
 													<span class="txt-dark block counter"><span class="counter-anim">2245</span></span>
-													<span class="weight-500 uppercase-font block font-13">Order</span>
+													<span class="weight-500 uppercase-font block font-13">InTransit Order</span>
 												</div>
 												<div class="col-xs-6 text-center  pl-0 pr-0 data-wrap-right">
 													<i class="icon-user-following data-right-rep-icon txt-light-grey"></i>
@@ -203,7 +203,7 @@
 											<div class="row">
 												<div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
 													<span class="txt-dark block counter"><span class="counter-anim">43</span></span>
-													<span class="weight-500 uppercase-font block">COURIER PROVIDER</span>
+													<span class="weight-500 uppercase-font block">COD Pending</span>
 												</div>
 												<div class="col-xs-6 text-center  pl-0 pr-0 data-wrap-right">
 													<i class="icon-control-rewind data-right-rep-icon txt-light-grey"></i>
@@ -269,7 +269,7 @@
 											<div class="row">
 												<div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
 													<span class="txt-dark block counter"><span class="counter-anim">2245</span></span>
-													<span class="weight-500 uppercase-font block font-13">Order</span>
+													<span class="weight-500 uppercase-font block font-13">Delivered Order</span>
 												</div>
 												<div class="col-xs-6 text-center  pl-0 pr-0 data-wrap-right">
 													<i class="icon-user-following data-right-rep-icon txt-light-grey"></i>
@@ -288,7 +288,7 @@
 											<div class="row">
 												<div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
 													<span class="txt-dark block counter"><span class="counter-anim">43</span></span>
-													<span class="weight-500 uppercase-font block">COURIER PROVIDER</span>
+													<span class="weight-500 uppercase-font block">Last COD Remitted</span>
 												</div>
 												<div class="col-xs-6 text-center  pl-0 pr-0 data-wrap-right">
 													<i class="icon-control-rewind data-right-rep-icon txt-light-grey"></i>

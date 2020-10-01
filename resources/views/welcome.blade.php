@@ -249,10 +249,12 @@ $(document).ready(function() {
   if(tamp > 0){
     if(measurement_in==0){
      tamp=tamp/27000;
+     tamp=tamp*10;
      tamp=tamp.toFixed(3);
      $('#dweight').html('Volumetric Weight (Kg) '+tamp+" Kg");  
     }else{
       tamp=tamp/1728;
+      tamp=tamp*10;
       tamp=tamp.toFixed(3);
       $('#dweight').html('Volumetric Weight (Kg) '+tamp+" Kg");  
     }

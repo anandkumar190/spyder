@@ -31,7 +31,9 @@
 									<h6 class="panel-title txt-dark">data Table</h6>
 								</div> -->
 								
-								<div class="clearfix"> <a href="{{url('pin-code/create')}}" class="btn btn-success btn-rounded pull-right"> add</a> </div>
+								<div class="clearfix">  <a href="{{url('pin-code/create')}}" class="btn btn-success btn-rounded pull-right"> add</a>  <button  class="btn btn-warning  btn-rounded " data-toggle="modal" data-target="#ImportModal"> Import</button>
+
+								 </div>
 							</div>
 							<div class="panel-wrapper collapse in">
 								<div class="panel-body">
@@ -48,6 +50,9 @@
 			<th>Is Serviceable</th>
 			<th>Is Cod</th>
 			<th>Is Prepaid</th>
+			<th>Is Delivery</th>
+			<th>Is Pickup</th>
+			<th>Is Oda</th>
 			<th>Status</th>
 			<th>Action</th>
 			
@@ -78,7 +83,30 @@
 					@else
 					<span class="label label-warning">No</span>
 		           @endif 
-				</td>				
+				</td>	
+					<td>@if($pincode->is_delivery==1)
+						<span class="label label-success">Yes</span>
+						@else
+						<span class="label label-warning">No</span>
+			           @endif 
+					</td>	
+											
+					<td>@if($pincode->is_pickup==1)
+						<span class="label label-success">Yes</span>
+						@else
+						<span class="label label-warning">No</span>
+			           @endif 
+					</td>
+
+						
+					<td>@if($pincode->is_oda==1)
+						<span class="label label-success">Yes</span>
+						@else
+						<span class="label label-warning">No</span>
+			           @endif 
+					</td>
+
+
 				<td>@if($pincode->status==1)
 					<span class="label label-success">Active</span>
 					@else
@@ -93,9 +121,7 @@
 				 @csrf </form>
 
 					<a href="javascript:void(0)" onclick="event.preventDefault();document.getElementById('zdelete{{$pincode->id}}').submit();"  data-toggle="tooltip" data-original-title="Close"> <i class="fa fa-close text-danger"></i></a>
-				</td>
-
-				
+				</td>	
 			</tr>
 
 		@endforeach
@@ -110,11 +136,14 @@
 			<th>Is Serviceable</th>
 			<th>Is Cod</th>
 			<th>Is Prepaid</th>
+			<th>Is Delivery</th>
+			<th>Is Pickup</th>
 			<th>Status</th>
 			<th>Action</th>
 		</tr>
 	</tfoot>
 </table>
+			
 										</div>
 									</div>
 								</div>
@@ -123,5 +152,46 @@
 					</div>
 				</div>
 				<!-- /Row -->
+
+
+
+			
+
+				<!-- Modal -->
+				<div class="modal fade" id="ImportModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel"> Pincode Csv Import </h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+
+				         <div class="container mt-3">
+				      				       
+
+				           <form action="/action_page.php">
+				        				             
+				         
+				             <input type="file" id="myFile" name="filename2">
+				           
+				             <div class="mt-3">
+				               <button type="submit" class="btn btn-primary pull-right">
+				               Submit </button>
+				             </div>
+				           </form>
+				         </div>
+
+				      </div>
+				      <div class="modal-footer">
+				     
+				      </div>
+				    </div>
+				  </div>
+				</div>
+
+
 
 	   @endsection     

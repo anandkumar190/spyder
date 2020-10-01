@@ -39,7 +39,6 @@
 												<thead>
 													<tr>
 														<th>Name</th>
-														<th>Alias</th>
 														<th>Location</th>
 														<th>Status</th>
 														<th>Action</th>
@@ -52,7 +51,6 @@
 
 	<tr>
 		<td>{{$zone->name}}</td>
-		<td>{{$zone->alias}}</</td>
 		<td>{{$zone->location}}</td>
 		<td>@if($zone->status==1)
 			<span class="label label-success">Active</span>
@@ -79,7 +77,6 @@
 												<tfoot>
 													<tr>
 														<th>Name</th>
-														<th>Alias</th>
 														<th>Location</th>
 														<th>Status</th>
 														<th>Action</th>

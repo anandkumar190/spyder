@@ -18,7 +18,7 @@
 					</div>
 					<!-- /Breadcrumb -->
 
-				</div>
+				</div>1
 				<!-- /Title -->
 
 				<!-- Row -->
@@ -40,8 +40,8 @@
 													<tr>
 														<th>Name</th>
 														<th>Company Name</th>
-														<th>mobile</th>
-														<th>email</th>
+														<th>Mobile</th>
+														<th>Email</th>
 														<th>GST</th>
 														<th>Status</th>
 													<!-- 	<th>Action</th>
@@ -65,6 +65,7 @@
 			<span class="label label-warning">Inactive</span>
            @endif 
 		</td>
+		
 		<!-- <td>
 			<a href="{{ url('zone/'.$vendor->id.'/edit')}}" class="mr-25" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i>
 		 </a> 

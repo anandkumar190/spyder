@@ -135,15 +135,18 @@
 																			</div>
 																		</div>
 																	</div>
-<!-- 																	<div class="form-group">
-																		<label class="control-label mb-10">Country</label>
-																		<select class="form-control" data-placeholder="Choose a Category" tabindex="1">
-																			<option value="Category 1">USA</option>
-																			<option value="Category 2">Austrailia</option>
-																			<option value="Category 3">India</option>
-																			<option value="Category 4">UK</option>
-																		</select>
-																	</div> -->
+																	
+<!-- <div class="form-group">
+		<label class="control-label `	mb-10">Country</label>
+		<select class="form-control" data-placeholder="Choose a Category" tabindex="1">
+			<option value="Category 1">USA</option>
+			<option value="Category 2">Austrailia</option>
+			<option value="Category 3">India</option>
+			<option value="Category 4">UK</option>
+		</select>
+	</div> -->
+
+
 																</div>
 																<div class="form-actions mt-10">			*Note: if u want  change  profile contact Suppport Team<br>
 																	<button type="submit" class="btn btn-success mr-10 mb-30">Update profile</button>

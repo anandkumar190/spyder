@@ -19,7 +19,7 @@ class PincondeController extends Controller
      */
     public function index()
     {
-        $pincode_list=PincodeModel::select('zones.name','pincodes.city','pincodes.is_serviceable','pincodes.is_cod','pincodes.is_prepaid','pincodes.status','pincodes.pincode','pincodes.id')->join('zones','pincodes.zone_fk_id','=','zones.id')->where('pincodes.created_by','=',Auth::user()->id)->get();
+        $pincode_list=PincodeModel::select('zones.name','pincodes.city','pincodes.is_delivery','pincodes.is_pickup','pincodes.is_serviceable','pincodes.is_cod','pincodes.is_prepaid','pincodes.status','pincodes.pincode','pincodes.id','pincodes.is_oda')->join('zones','pincodes.zone_fk_id','=','zones.id')->where('pincodes.created_by','=',Auth::user()->id)->get();
 
      return view('vendor/master/pincode',compact('pincode_list'));
     }
@@ -53,9 +53,12 @@ class PincondeController extends Controller
                 'serviceable' => 'required' ,
                 'cod' => 'required' ,
                 'is_oda' => 'required' ,
+                'is_pickup' => 'required' ,
+                'is_delivery' => 'required' ,
                 'prepaid' => 'required' ,
                 'status' => 'required' ,
             ]);
+
 
 
 
@@ -66,7 +69,9 @@ class PincondeController extends Controller
                $obj->is_serviceable  = $request->serviceable;
                $obj->is_cod  = $request->cod;
                $obj->is_prepaid  = $request->prepaid;
-               $obj->is_oda  = $request->is_oda;
+               $obj->is_oda  = $request->is_oda;           
+               $obj->is_pickup  = $request->is_pickup;
+               $obj->is_delivery  = $request->is_delivery;
                $obj->status  = $request->status;
                $obj->created_by = Auth::user()->id;
                
@@ -119,14 +124,16 @@ class PincondeController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-              'zone' => 'required',
-              'city' => 'required',
-              'Pincode' => 'required|numeric' ,
-              'serviceable' => 'required' ,
-              'cod' => 'required' ,
-                'is_oda' => 'required' ,
-              'prepaid' => 'required' ,
-              'status' => 'required' ,
+                  'zone' => 'required',
+                  'city' => 'required',
+                  'Pincode' => 'required|numeric' ,
+                  'serviceable' => 'required' ,
+                  'cod' => 'required' ,
+                  'is_oda' => 'required' ,
+                  'is_pickup' => 'required' ,
+                  'is_delivery' => 'required' ,
+                  'prepaid' => 'required' ,
+                  'status' => 'required' ,
           ]);
 
 
@@ -139,9 +146,10 @@ class PincondeController extends Controller
              $obj->is_cod  = $request->cod;
              $obj->is_prepaid  = $request->prepaid;
              $obj->is_oda  = $request->is_oda;
+             $obj->is_pickup  = $request->is_pickup;
+             $obj->is_delivery  = $request->is_delivery;
              $obj->status  = $request->status;
-             $obj->created_by = Auth::user()->id;
-             
+                          
              if($obj->save()){
                Alert::success(' pincode Updated', 'Successfully');
                return redirect('pin-code');

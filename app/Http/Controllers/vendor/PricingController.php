@@ -17,7 +17,7 @@ class PricingController extends Controller
    public function pricelist()
    {
       $created_by=Auth::user()->id;
-      $zones=ZoneModel::where('created_by','=',$created_by)->where('status','=','1')->pluck('name','id');
+      $zones=ZoneModel::where('status','=','1')->pluck('name','id');
 
    $basecharge=BasepriceModel::where('created_by','=',$created_by)->get();
 

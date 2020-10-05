@@ -15,8 +15,10 @@ class VendoerChangesController extends Controller
 
             	 return view('vendor/master/allvendor',compact('vendorlist'));
      
-   
-
-
      }
+
+
+
+
+     
 }

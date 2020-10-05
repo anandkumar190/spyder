@@ -27,6 +27,7 @@ class VendorController extends Controller
           return view('vendor\vendor_profile',compact('data'));
     }
 
+
    
 
 

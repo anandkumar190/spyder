@@ -36,6 +36,7 @@ Route::post('vas-charges','Vendor\PricingController@vascharges');
 
 Route::get('dashboard','ShippingRateCalculator@dash_board');
 Route::get('vendor-profile','Vendor\VendorController@vendor_profile');
+Route::post('pincode-import','Vendor\PincondeController@Importpincode');
 
 Route::get('all-vendor','Vendor\VendoerChangesController@allvendor');
 

@@ -168,11 +168,27 @@
 				          <span aria-hidden="true">&times;</span>
 				        </button>
 				      </div>
-				   <form action="/action_page.php">
+				   <form action="{{url('pincode-import')}}" method="post" enctype="multipart/form-data">
+				  	@csrf
 				      <div class="modal-body">
+
+
+      
+
 				         <div class="container mt-3">
-				             <input type="file" id="myFile" name="filename2">
-				           
+         					<div class="form-group  col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+         						
+         						<label class="control-label mb-10 text-left">Select Zone</label>
+         						<select name="zone" class="form-control">
+         	                 @foreach($allzones as $key=>$val)
+         							<option value="{{$key}}">{{$val}}</option>
+         	                 @endforeach    
+         						</select>
+
+         					</div>
+         						<div class="form-group  col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+				             <input type="file" id="myFile" name="filename">
+				           </div>
 				         </div>
 
 				      </div>

@@ -19,9 +19,10 @@ class PincondeController extends Controller
      */
     public function index()
     {
+        $allzones=ZoneModel::where('status','=','1')->pluck('name','id');
         $pincode_list=PincodeModel::select('zones.name','pincodes.city','pincodes.is_delivery','pincodes.is_pickup','pincodes.is_serviceable','pincodes.is_cod','pincodes.is_prepaid','pincodes.status','pincodes.pincode','pincodes.id','pincodes.is_oda')->join('zones','pincodes.zone_fk_id','=','zones.id')->where('pincodes.created_by','=',Auth::user()->id)->get();
 
-     return view('vendor/master/pincode',compact('pincode_list'));
+     return view('vendor/master/pincode',compact('pincode_list','allzones'));
     }
 
     /**
@@ -177,4 +178,84 @@ class PincondeController extends Controller
           return redirect('pin-code');  
        }
     }
+
+
+
+
+    
+    public function Importpincode(Request $request)
+     {
+      // File Details 
+/*       $filename = $file->getClientOriginalName();
+       $extension = $file->getClientOriginalExtension();
+       $tempPath = $file->getRealPath();
+       $fileSize = $file->getSize();
+       $mimeType = $file->getMimeType();
+*/
+    $notsave = array();
+   $decision = array('yes' =>1,'no'=>0,);
+
+      $request->validate([ 
+        'zone'=>'required',
+        'filename'=>'required|mimes:csv,txt',
+       ]);
+
+
+       $zoneid=$request->zone;    
+       $authid=Auth::user()->id;    
+      $allpin=file($request->filename->getRealPath());
+      $allpin=array_slice($allpin,1);      
+      foreach ($allpin as $key => $value) {
+
+             $row=explode(",", $value);
+        /*        print_r($row);*/
+
+                $row[2]= $decision[strtolower($row[2])];
+                $row[3]= $decision[strtolower($row[3])];
+                $row[4]= $decision[strtolower($row[4])];
+                $row[5]= $decision[strtolower($row[5])];
+                $row[6]= $decision[strtolower($row[6])];
+                $row[7]= $decision[strtolower($row[7])];
+
+
+
+             $obj = new PincodeModel();
+             $obj->zone_fk_id = $zoneid;
+             $obj->city = $row[0];
+             $obj->pincode = $row[1];
+             $obj->is_serviceable  = $row[2];
+             $obj->is_pickup  = $row[3];
+             $obj->is_delivery  = $row[4];
+             $obj->is_cod  = $row[5];
+             $obj->is_prepaid  = $row[6];
+             $obj->is_oda  = $row[7];           
+             $obj->status  = 1;
+             $obj->created_by = $authid;
+
+              if($obj->save()){
+              $success_var=1;
+              }else{
+                
+                $notsave[]=$row[1];
+                $success_var=0; 
+              }
+      
+      }
+
+
+      if ($success_var) {
+        Alert::success('all pincodes imported', 'Successfully');
+        return redirect('pin-code'); 
+      }else{
+        Alert::error(' Pincodes Not imported', $notsave);
+         return redirect('pin-code');  
+            
+      }
+         
+  } 
+    
+
+
+
+
 }

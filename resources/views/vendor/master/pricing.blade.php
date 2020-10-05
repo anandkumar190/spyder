@@ -336,4 +336,102 @@
 
 <!-- /Row -->
 
+
+
+				<!-- Row -->
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="panel panel-default card-view">
+				<div class="panel-heading">
+					<div class="pull-left">
+						<h6 class="panel-title txt-dark">Handling Charges</h6>
+					</div>
+					<div class="clearfix">Weight. per Box </div>
+				</div>
+				<div class="panel-wrapper collapse in">
+
+	<div class="panel-body">
+		<div class="form-wrap">
+			<form action="{{url('handling-charges')}}" method="post">
+				@csrf
+
+				<div id="inputFormRow">
+				<div class="form-group  col-lg-4 col-md-4 col-sm-4 col-xs-4 ">
+					<label class="control-label mb-10 text-left"> Min Wt. per Box </label>
+					<input type="text"  name="minwt[]" class="form-control" id="fulesurcharge"    value="0"  required  >
+				</div>
+
+				<div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4 ">
+					<label class="control-label mb-10 text-left">Upto Wt </label>
+					<input type="text" name="maxwt[]" class="form-control"value=""  placeholder="0" required>
+				</div>
+
+
+				<div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4 ">
+					<label class="control-label mb-10 text-left">Charge/Kg</label>
+					<input type="text" name="chargekg[]" class="form-control" value=""placeholder="0" required>
+				</div>
+		
+				
+			
+	</div>
+	            <div id="newRow"></div>
+			            <button id="addRow" type="button" class="btn pull-right btn-info">Add Row</button>
+
+
+<!-- end  -->
+
+
+
+<button type="submit" class="btn btn-success btn-anim disabled" style="margin:30px" ><i class="icon-rocket"></i><span class="btn-text">Update</span></button>
+		
+
+			</form>
+		</div>
+	</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- /Row -->
+
+<script type="text/javascript">
+    // add row
+    $("#addRow").click(function () {
+var html = '';
+
+html += '<div id="inputFormRow">';
+html += '<div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4 ">';
+html += '<input type="text"  name="minwt[]"                                    class="form-control"id="fulesurcharge"  placeholder="0" value="" required >';
+html += '</div>';
+
+html += '<div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4 ">';
+html += '<input type="text" name="maxwt[]" class="form-control"value=""  placeholder="0" required >';
+html += '</div>';
+
+html += '<div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-3 ">';
+html += '<input type="text" name="chargekg[]" class="form-control" value=""placeholder="0" required >';
+html += '</div>';
+
+html += '<div class="form-group col-lg-1 col-md-1 col-sm-1 col-xs-1 ">';
+html += '<span id="removeRow" type="button" class="btn btn-danger"><i class="zmdi zmdi-delete"></i></span>';
+html += '</div>';
+
+      
+
+        $('#newRow').append(html);
+    });
+
+    // remove row
+    $(document).on('click', '#removeRow', function () {
+        $(this).closest('#inputFormRow').remove();
+    });
+
+    
+</script>
+
+
+
 	   @endsection     

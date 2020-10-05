@@ -33,6 +33,7 @@ Route::get('pricing','Vendor\PricingController@pricelist');
 Route::post('surface-price','Vendor\PricingController@surfaceprice');
 Route::post('air-prices','Vendor\PricingController@airprice');
 Route::post('vas-charges','Vendor\PricingController@vascharges');
+Route::post('handling-charges','Vendor\PricingController@handlingcharge');
 
 Route::get('dashboard','ShippingRateCalculator@dash_board');
 Route::get('vendor-profile','Vendor\VendorController@vendor_profile');

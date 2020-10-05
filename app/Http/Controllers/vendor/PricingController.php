@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\ZoneModel;
 use App\BasepriceModel;
 use App\VasChargeModel;
+use App\HandlingChargesModel;
 use Auth;
 use DB;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -145,6 +146,16 @@ class PricingController extends Controller
          return redirect('pricing');
        }
    
+
+
+
+public function handlingcharge(Request $request)
+{
+   dd($request->toArray());
+   $obj=new HandlingChargesModel;
+  
+
+}
 
 
    public function activate(Request $request)

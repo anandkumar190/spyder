@@ -20,6 +20,10 @@ class PricingController extends Controller
       $created_by=Auth::user()->id;
       $zones=ZoneModel::where('status','=','1')->pluck('name','id');
 
+   $HandlingCharges=HandlingChargesModel::where('created_by','=',$created_by)->get();
+ 
+/* dd($HandlingCharges);
+*/
    $basecharge=BasepriceModel::where('created_by','=',$created_by)->get();
 
    $vascharge=VasChargeModel::where('created_by','=',$created_by)->first();
@@ -27,12 +31,16 @@ class PricingController extends Controller
  $surface_charege=array();
  $air_charege=array();
 
+
+ 
+ 
+
   foreach ($basecharge as $value) {
        $surface_charege[$value->zone_from][$value->zone_to]=$value->s_price;
        $air_charege[$value->zone_from][$value->zone_to]=$value->a_price;
    } 
    
-   	   return view('vendor/master/pricing',compact('zones','surface_charege','air_charege','vascharge'));
+   	   return view('vendor/master/pricing',compact('zones','surface_charege','air_charege','vascharge','HandlingCharges'));
    }
 
 
@@ -104,7 +112,6 @@ class PricingController extends Controller
              ['fuel_surcharge' => $request->fulesurcharge,
              'docket_charge' => $request->docketcharges,
              'risk_on_val' => $request->rikk_on_val,
-
              'oda_min' => $request->min_oda,
              'min_weight' => $request->min_kg,
              'payment_term' => $request->payment_terms,
@@ -149,25 +156,39 @@ class PricingController extends Controller
 
 
 
-public function handlingcharge(Request $request)
-{
-   dd($request->toArray());
-
+  public function handlingcharge(Request $request)
+  {
    
-   $obj=new HandlingChargesModel;
+    $created_by=Auth::user()->id;
 
-  
+     $result=HandlingChargesModel::where('created_by','=',$created_by)->delete();
+    
 
-}
+
+             foreach ($request->chargekg as $key => $value) {
+             
+                 $obj=new HandlingChargesModel;
+                 $obj->min=$request->minwt[$key];
+                 $obj->max=$request->maxwt[$key];
+                 $obj->price=$value;
+                 $obj->created_by=$created_by;
+                 $obj->save();
+             }
+
+             Alert::success('Handling charges Updated', 'Successfully');         
+               return redirect('pricing');
+        
+
+  }
 
 
    public function activate(Request $request)
    {
-   	# code...
+    	# code...
    }
    public function deactivate(Request $request)
    {
-   	# code...
+    	# code...
    }
 
 

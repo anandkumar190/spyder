@@ -15,10 +15,17 @@ class ShippingRateCalculator extends Controller
 {
     public function scalculator(Request $request)
     {
-          /* dd($request->toArray());*/
+           
           
        $is_return=$request->isReturn;
+
        $actual_weight=$request->weight;
+       $measurement_in=$request->measurement_in;/*cm=0,INCH=1,*/
+       
+       $is_fod=$request->is_fod;
+       $fod_declared=$request->fod_declared;
+       $is_cod=$request->is_cod;
+       $declared=$request->declared;
 
        $dimensional_weight=($request->length*$request->breadth*$request->height);
 
@@ -33,11 +40,29 @@ class ShippingRateCalculator extends Controller
 		$air_price = array();
 		$sur_price = array();
 
+        $pickup_serviceable=PincodeModel::select('created_by') /*make function */
+        ->where('pincode','=',$request->pickupcode)
+        ->where('is_pickup','=',1)
+        ->groupBy('created_by')
+        ->pluck('created_by');
+
+        $delivery_serviceable=PincodeModel::select('created_by') /*make function*/
+        ->where('pincode','=',$request->deliverycode)
+        ->where('is_delivery','=',1)
+        ->groupBy('created_by')
+        ->pluck('created_by');
+  
+
         $vendor_serviceable=PincodeModel::select('created_by')
         ->whereIn('pincode',[$request->pickupcode,$request->deliverycode])
         ->groupBy('created_by')
         ->pluck('created_by');
 
+        print_r($pickup_serviceable);
+        print_r($delivery_serviceable);
+        print_r($vendor_serviceable);
+
+        dd($request->toArray());
 
 		$pickup=PincodeModel::select('created_by','pincode','zone_fk_id')
 		->where('pincode','=',$request->pickupcode)

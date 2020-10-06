@@ -51,14 +51,35 @@ class PlansController extends Controller
        $obj->fuel_surcharge=$request->fuel_surcharge; 
        $obj->docket_charge=$request->docketcharges; 
        $obj->handling_charges=$request->handling_charges; 
-       $obj->risk_on_val=$request->rikk_on_val; 
-       $obj->oda_min=$request->min_oda; 
+        $obj->oda_min=$request->min_oda; 
        $obj->min_weight=$request->min_kg; 
-
        $obj->min_freight=$request->min_freight; 
        $obj->payment_term=$request->payment_terms; 
        $obj->oda_pkg=$request->per_kg_oda; 
        $obj->gst=$request->gst; 
+       $obj->owner_risk_kg = $request->owner_risk_kg;
+       $obj->owner_risk_min = $request->owner_risk_min;
+       $obj->carrier_risk_kg = $request->carrier_risk_kg;
+       $obj->carrier_risk_min = $request->carrier_risk_min;
+       $obj->opu_kg = $request->opu_kg;
+       $obj->opu_min = $request->opu_min;
+       $obj->ossh_kg = $request->ossh_kg;
+       $obj->ossh_min = $request->ossh_min;
+       $obj->ossh_max = $request->ossh_max;
+       $obj->daspat_kg = $request->daspat_kg;
+       $obj->daspat_min = $request->daspat_min;
+       $obj->sezd_kg = $request->sezd_kg;
+       $obj->sezd_min = $request->sezd_min;
+       $obj->csd_kg = $request->csd_kg;
+       $obj->csd_min = $request->csd_min;
+       $obj->gcd_kg = $request->gcd_kg;
+       $obj->gcd_min = $request->gcd_min;
+       $obj->hfd = $request->hfd;
+       $obj->green_tax_kg = $request->green_tax_kg;
+       $obj->green_tax_min = $request->green_tax_min;
+       $obj->demurrage = $request->demurrage;
+       $obj->m_charges = $request->m_charges;
+
        $obj->status=$request->Status; 
 
 
@@ -115,13 +136,35 @@ class PlansController extends Controller
          $obj->fuel_surcharge=$request->fuel_surcharge; 
          $obj->docket_charge=$request->docketcharges; 
          $obj->handling_charges=$request->handling_charges; 
-         $obj->risk_on_val=$request->rikk_on_val; 
          $obj->oda_min=$request->min_oda; 
          $obj->min_weight=$request->min_kg; 
          $obj->min_freight=$request->min_freight; 
          $obj->payment_term=$request->payment_terms; 
          $obj->oda_pkg=$request->per_kg_oda; 
          $obj->gst=$request->gst; 
+         $obj->owner_risk_kg = $request->owner_risk_kg;
+         $obj->owner_risk_min = $request->owner_risk_min;
+         $obj->carrier_risk_kg = $request->carrier_risk_kg;
+         $obj->carrier_risk_min = $request->carrier_risk_min;
+         $obj->opu_kg = $request->opu_kg;
+         $obj->opu_min = $request->opu_min;
+         $obj->ossh_kg = $request->ossh_kg;
+         $obj->ossh_min = $request->ossh_min;
+         $obj->ossh_max = $request->ossh_max;
+         $obj->daspat_kg = $request->daspat_kg;
+         $obj->daspat_min = $request->daspat_min;
+         $obj->sezd_kg = $request->sezd_kg;
+         $obj->sezd_min = $request->sezd_min;
+         $obj->csd_kg = $request->csd_kg;
+         $obj->csd_min = $request->csd_min;
+         $obj->gcd_kg = $request->gcd_kg;
+         $obj->gcd_min = $request->gcd_min;
+         $obj->hfd = $request->hfd;
+         $obj->green_tax_kg = $request->green_tax_kg;
+         $obj->green_tax_min = $request->green_tax_min;
+         $obj->demurrage = $request->demurrage;
+         $obj->m_charges = $request->m_charges;
+
          $obj->status=$request->Status; 
 
 

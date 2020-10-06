@@ -111,7 +111,30 @@
 
         
           </div>
+          <div class="form-row">
 
+              <div class="col-md-4 mb-3">
+                <label >FOD</label>
+
+               <select name="is_fod"  id="is_fod" required   class="custom-select custom-select-md mb-3">
+                  <option  value="0" >NO</option>
+                  <option value="1" >YES</option>
+               </select>
+
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label>Declared Value in INR </label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">₹</span>
+                  </div>
+                  <input type="number"  name="fod_declared"  id="fod_declared" class="form-control" placeholder="FOD  Declared Value" >  
+                    <input type="number"  name="fod_declared"  id="declared_val" class="form-control" required  placeholder="Declared Value" >
+                </div>
+              </div>
+
+            </div>
 
       <button type="submit" class="btn btn-primary" >Submit form</button>
 

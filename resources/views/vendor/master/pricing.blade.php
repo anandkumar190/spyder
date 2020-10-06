@@ -355,26 +355,54 @@
 			<form action="{{url('handling-charges')}}" method="post">
 				@csrf
 
-				<div id="inputFormRow">
-				<div class="form-group  col-lg-4 col-md-4 col-sm-4 col-xs-4 ">
-					<label class="control-label mb-10 text-left"> Min Wt. per Box </label>
-					<input type="text"  name="minwt[]" class="form-control" id="fulesurcharge"    value="0"  required  >
-				</div>
+						<div id="inputFormRow">
+							
+							<div class="form-group  col-lg-4 col-md-4 col-sm-4 col-xs-4 ">
+								<label class="control-label mb-10 text-left"> Min Wt. per Box </label>
+								<input type="text"  name="minwt[]" class="form-control" id="fulesurcharge"    value="{{@$HandlingCharges[0]->min}}" placeholder="0"  required  >
+							</div>
 
-				<div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4 ">
-					<label class="control-label mb-10 text-left">Upto Wt </label>
-					<input type="text" name="maxwt[]" class="form-control"value=""  placeholder="0" required>
-				</div>
+							<div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4 ">
+								<label class="control-label mb-10 text-left">Upto Wt </label>
+								<input type="text" name="maxwt[]" class="form-control"value="{{@$HandlingCharges[0]->max}}"  placeholder="0" required>
+							</div>
 
 
-				<div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4 ">
-					<label class="control-label mb-10 text-left">Charge/Kg</label>
-					<input type="text" name="chargekg[]" class="form-control" value=""placeholder="0" required>
-				</div>
+							<div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4 ">
+								<label class="control-label mb-10 text-left">Charge/Kg</label>
+								<input type="text" name="chargekg[]" class="form-control" value="{{@$HandlingCharges[0]->price}}"placeholder="0" required>
+							</div>
+						
+
+				         </div>
+
+@foreach($HandlingCharges as $key => $handlcharge)
+
+@php
+if($key==0){
+	continue;
+}
+@endphp
+	<div id="inputFormRow">
 		
-				
+		<div class="form-group  col-lg-4 col-md-4 col-sm-4 col-xs-4 ">
 			
-	</div>
+			<input type="text"  name="minwt[]" class="form-control" id="fulesurcharge"    value="{{$handlcharge->min}}"  required  >
+		</div>
+		<div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4 ">
+			
+			<input type="text" name="maxwt[]" class="form-control"value="{{$handlcharge->max}}"  placeholder="0" required>
+		</div>
+		<div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
+			<input type="text" name="chargekg[]" class="form-control" value="{{$handlcharge->price}}"placeholder="0" required>
+		</div>
+		<div class="form-group col-lg-1 col-md-1 col-sm-1 col-xs-1 "><span id="removeRow" type="button" class="btn btn-danger"><i class="zmdi zmdi-delete"></i></span>
+	    </div>
+</div>
+
+ @endforeach
+
+
 	            <div id="newRow"></div>
 			            <button id="addRow" type="button" class="btn pull-right btn-info">Add Row</button>
 

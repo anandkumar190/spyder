@@ -152,7 +152,10 @@ class PricingController extends Controller
 public function handlingcharge(Request $request)
 {
    dd($request->toArray());
+
+   
    $obj=new HandlingChargesModel;
+
   
 
 }

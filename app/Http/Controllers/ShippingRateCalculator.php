@@ -20,19 +20,25 @@ class ShippingRateCalculator extends Controller
        $is_return=$request->isReturn;
 
        $actual_weight=$request->weight;
-       $measurement_in=$request->measurement_in;/*cm=0,INCH=1,*/
+       $measurement_in=$request->measurement_in; /*cm=0,INCH=1,*/
        
        $is_fod=$request->is_fod;
        $fod_declared=$request->fod_declared;
        $is_cod=$request->is_cod;
        $declared=$request->declared;
 
-       $dimensional_weight=($request->length*$request->breadth*$request->height);
+       $plan_weight=10;
 
-       if ($dimensional_weight>0) {
-       	$dimensional_weight=$dimensional_weight/1728;
-       }
-       
+       $dimensional_weight=($request->length*$request->breadth*$request->height);
+       if ($dimensional_weight>0) {/*dimensional weight calculator*/
+
+       	  if ($measurement_in==0){
+       	  	$dimensional_weight=$dimensional_weight/27000*$plan_weight;
+       	  }
+       	  elseif($measurement_in==1){
+             $dimensional_weight=$dimensional_weight/1728*$plan_weight;
+       	  }
+       }  
      $weight=$actual_weight>$dimensional_weight ? $actual_weight : $dimensional_weight;
 
 /*-------------weight fro calculation---------------------*/
@@ -40,29 +46,41 @@ class ShippingRateCalculator extends Controller
 		$air_price = array();
 		$sur_price = array();
 
-        $pickup_serviceable=PincodeModel::select('created_by') /*make function */
+		$pickup_serviceable=$this->is_pickup_serviceable($request->pickupcode)->toArray();
+         $delivery_serviceable=$this->is_delivery_serviceable($request->deliverycode)->toArray();
+
+  /*  $pickup_serviceable=PincodeModel::select('created_by')
         ->where('pincode','=',$request->pickupcode)
         ->where('is_pickup','=',1)
         ->groupBy('created_by')
         ->pluck('created_by');
 
-        $delivery_serviceable=PincodeModel::select('created_by') /*make function*/
+        $delivery_serviceable=PincodeModel::select('created_by') 
         ->where('pincode','=',$request->deliverycode)
         ->where('is_delivery','=',1)
         ->groupBy('created_by')
-        ->pluck('created_by');
-  
+        ->pluck('created_by'); 
+*/
 
-        $vendor_serviceable=PincodeModel::select('created_by')
+
+/*        $vendor_serviceable=PincodeModel::select('created_by')
         ->whereIn('pincode',[$request->pickupcode,$request->deliverycode])
         ->groupBy('created_by')
-        ->pluck('created_by');
+        ->pluck('created_by');*/
 
-        print_r($pickup_serviceable);
-        print_r($delivery_serviceable);
-        print_r($vendor_serviceable);
 
-        dd($request->toArray());
+
+
+  if(empty($pickup_serviceable)){
+       return "not pickup pincode serviceable";
+  }
+  if(empty($delivery_serviceable)){
+       return "not delivery pincode serviceable";
+  }
+
+$vendor_serviceable=array_intersect($pickup_serviceable,$delivery_serviceable);
+
+/* Zone fo pincode vendor wise  */	
 
 		$pickup=PincodeModel::select('created_by','pincode','zone_fk_id')
 		->where('pincode','=',$request->pickupcode)
@@ -72,10 +90,22 @@ class ShippingRateCalculator extends Controller
 		->where('pincode','=',$request->deliverycode)
 		->pluck('zone_fk_id','created_by');
 
+
+/*check ODA  pincode */
+
 		$isods_D_pin=PincodeModel::select('created_by','is_oda')
 		->where('pincode','=',$request->deliverycode)
 		->whereIn('created_by',$vendor_serviceable)
 		->pluck('is_oda','created_by');
+
+		$isods_P_pin=PincodeModel::select('created_by','is_oda')
+		->where('pincode','=',$request->pickupcode)
+		->whereIn('created_by',$vendor_serviceable)
+		->pluck('is_oda','created_by');
+
+
+
+        dd($request->toArray());
 
 		           
 		$fuel_surcharge=VasChargeModel::whereIn('created_by',$vendor_serviceable)
@@ -186,6 +216,42 @@ class ShippingRateCalculator extends Controller
 
 
 
+ public function is_pickup_serviceable($pincode)
+ {
+   	$pickup_serviceable=PincodeModel::select('created_by') /*make function */
+ 	->where('pincode','=',$pincode)
+ 	->where('is_pickup','=',1)
+ 	->groupBy('created_by')
+ 	->pluck('created_by');
+
+ 	return $pickup_serviceable;
+ 
+ }
+
+
+ public function is_delivery_serviceable($pincode)
+ {
+   	
+   	$delivery_serviceable=PincodeModel::select('created_by') /*make function*/
+   	->where('pincode','=',$pincode)
+   	->where('is_delivery','=',1)
+   	->groupBy('created_by')
+   	->pluck('created_by');
+   	
+ 	return $delivery_serviceable;
+ 
+ }
+
+
+
+
+
+
+
+
+
+
+
 
 		public function dash_board()
 		{
@@ -196,4 +262,9 @@ class ShippingRateCalculator extends Controller
 		{
 		   return view('fronthand\price_list');
 		}
+
+
+
+
+
 }

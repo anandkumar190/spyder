@@ -136,6 +136,22 @@
 
             </div>
 
+
+            <div class="form-row">
+
+                <div class="col-md-4 mb-3">
+                  <label >Risk</label>
+
+                 <select name="risk"  id="risk" required   class="custom-select custom-select-md mb-3">
+                    <option  value="0" >owner</option>
+                    <option value="1" >carrier</option>
+                 </select>
+
+                </div>
+
+
+              </div>
+
       <button type="submit" class="btn btn-primary" >Submit form</button>
 
     </form>

@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\ZoneModel;
 use App\BasepriceModel;
 use App\VasChargeModel;
+use App\HandlingChargesModel;
+
+use App\PlaneModel;
 use App\PincodeModel;
 use App\User;
 
@@ -16,9 +19,14 @@ class ShippingRateCalculator extends Controller
     public function scalculator(Request $request)
     {
            
-          
-       $is_return=$request->isReturn;
+       $plan_weight=10;//$plan_weight_CFT
+       $which_plan=18;
 
+
+  $spyderplan = PlaneModel::where('id','=',$which_plan)->where('status','=',1)->first();
+          
+
+       $is_return=$request->isReturn;
        $actual_weight=$request->weight;
        $measurement_in=$request->measurement_in; /*cm=0,INCH=1,*/
        
@@ -26,8 +34,8 @@ class ShippingRateCalculator extends Controller
        $fod_declared=$request->fod_declared;
        $is_cod=$request->is_cod;
        $declared=$request->declared;
+       $risk=$request->risk; /*ownwer=0,carrier=1,*/
 
-       $plan_weight=10;
 
        $dimensional_weight=($request->length*$request->breadth*$request->height);
        if ($dimensional_weight>0) {/*dimensional weight calculator*/
@@ -103,12 +111,52 @@ $vendor_serviceable=array_intersect($pickup_serviceable,$delivery_serviceable);
 		->whereIn('created_by',$vendor_serviceable)
 		->pluck('is_oda','created_by');
 
+/*risk on value carrier or ownwer */
+
+	if ($risk==1) {
+			  
+					$risk_kg=VasChargeModel::whereIn('created_by',$vendor_serviceable)
+					->pluck('carrier_risk_kg','created_by');
+           
+                   $spyderrisk_kg=$spyderplan->carrier_risk_kg;
+                   $spyderrisk_min=$spyderplan->carrier_risk_min;
+
+					$risk_min=VasChargeModel::whereIn('created_by',$vendor_serviceable)
+					->pluck('carrier_risk_min','created_by');
+			    
+			}else{
+				$risk_kg=VasChargeModel::whereIn('created_by',$vendor_serviceable)
+				->pluck('owner_risk_kg','created_by');
+
+				$risk_min=VasChargeModel::whereIn('created_by',$vendor_serviceable)
+				->pluck('owner_risk_min','created_by');
+
+				$spyderrisk_kg=$spyderplan->owner_risk_kg;
+				$spyderrisk_min=$spyderplan->owner_risk_min;
+
+			}
+			       
 
 
-        dd($request->toArray());
+
+
+/*print_r($owner_risk_kg);
+echo "owner_risk_kg";
+print_r($owner_risk_min);
+echo "owner_risk_min";
+print_r($carrier_risk_kg);
+echo "carrier_risk_kg";
+print_r($carrier_risk_min);
+echo "carrier_risk_min";
+*/
+
+
+$nullhandling=HandlingChargesModel::whereIn('created_by',$vendor_serviceable)->where('min','=',0)
+	->pluck('max','created_by');
+
 
 		           
-		$fuel_surcharge=VasChargeModel::whereIn('created_by',$vendor_serviceable)
+		$fuel_surcharges=VasChargeModel::whereIn('created_by',$vendor_serviceable)
 			->pluck('fuel_surcharge','created_by');
 
 		$docket_charge=VasChargeModel::whereIn('created_by',$vendor_serviceable)
@@ -117,14 +165,8 @@ $vendor_serviceable=array_intersect($pickup_serviceable,$delivery_serviceable);
 		$min_weight=VasChargeModel::whereIn('created_by',$vendor_serviceable)
 		->pluck('min_weight','created_by');
 
-		$gst=VasChargeModel::whereIn('created_by',$vendor_serviceable)
-		->pluck('gst','created_by');
-
 		$oda_pkg=VasChargeModel::whereIn('created_by',$vendor_serviceable)
 		->pluck('oda_pkg','created_by');   
-
-		$risk_on_val=VasChargeModel::whereIn('created_by',$vendor_serviceable)
-		->pluck('risk_on_val','created_by');
 
 		$oda_min=VasChargeModel::whereIn('created_by',$vendor_serviceable)
 		->pluck('oda_min','created_by');
@@ -132,8 +174,17 @@ $vendor_serviceable=array_intersect($pickup_serviceable,$delivery_serviceable);
 		$min_freight=VasChargeModel::whereIn('created_by',$vendor_serviceable)
 		->pluck('min_freight','created_by');
 
+		$all_cod=VasChargeModel::whereIn('created_by',$vendor_serviceable)
+		->pluck('cod','created_by');
 
 
+		$gst=VasChargeModel::whereIn('created_by',$vendor_serviceable)
+		->pluck('gst','created_by');
+
+	/*	dd($vendor_serviceable);*/
+
+	/*spyderplan->*/
+	/*	dd($spyderplan);*/
 		   foreach ($vendor_serviceable as $key => $value){
 		   		
 		    	$vendor_base_charge=BasepriceModel::select('s_price','a_price')->where('zone_from','=',$pickup[$value])->where('zone_to','=',$delivery[$value])->where('created_by','=',$value)->first();
@@ -144,45 +195,64 @@ $vendor_serviceable=array_intersect($pickup_serviceable,$delivery_serviceable);
                       $weight=$weight>$min_weight[$value] ? $weight : $min_weight[$value];
                  /*----------------------------------------------------------------*/
 
-                 $air_price[$value]=$vendor_base_charge->s_price*$weight;
-                 $sur_price[$value]=$vendor_base_charge->a_price*$weight;
+                 $sur_parce=$vendor_base_charge->s_price+$spyderplan->base_charge;
+                 $air_parce=$vendor_base_charge->a_price+$spyderplan->base_charge;
 
-                
+                 $air_price[$value]=number_format($sur_parce*$weight,2);
+                 $sur_price[$value]=number_format($air_parce*$weight,2);
+           
+                   
+
                 /*----------------Fuel-Surcharge-%------------------*/
-                   $fuel_surcharge=@$air_price[$value]*@$fuel_surcharge[$value];
 
-                    $fuel_surcharge= $fuel_surcharge>0 ? ($fuel_surcharge/100) : 0;
+              $total_fuel_surcharge=$fuel_surcharges[$value]*$spyderplan->fuel_surcharge;
+              $total_fuel_surcharge= $total_fuel_surcharge>0 ? ($total_fuel_surcharge/100) : 0;
+   
 
-                 $air_price[$value]=$air_price[$value]+$fuel_surcharge;
-                 $sur_price[$value]=$sur_price[$value]+$fuel_surcharge;
+
+                   $total_fuel_surcharge=$fuel_surcharges[$value]+$total_fuel_surcharge;
+
+                   $air_fuel_surcharge=@$air_price[$value]*@$total_fuel_surcharge;
+                   $sur_fuel_surcharge=@$sur_price[$value]*@$total_fuel_surcharge;
+
+                    $air_fuel_surcharge=  $air_fuel_surcharge>0 ? ($air_fuel_surcharge/100) : 0;
+                    $sur_fuel_surcharge= $sur_fuel_surcharge>0 ? ($sur_fuel_surcharge/100) : 0;
+                         
+
+                 $air_price[$value]=number_format($air_price[$value]+$air_fuel_surcharge,2);
+                 $sur_price[$value]=number_format($sur_price[$value]+$sur_fuel_surcharge,2);
 
 
                 /*-----------------------------------------------------*/
 
 
 
-                /*--------------- Docket Charges-----------------------------*/
+       /*--------------- Docket Charges-----------------------------*/
                       
-                      $air_price[$value]=$air_price[$value]+$docket_charge[$value];
-                      $sur_price[$value]=$sur_price[$value]+$docket_charge[$value];
+            $air_price[$value]=$air_price[$value]+$docket_charge[$value]+$spyderplan->docket_charge;
+            $sur_price[$value]=$sur_price[$value]+$docket_charge[$value]+$spyderplan->docket_charge;
 
-                /*-----------------------------------------------------------*/
+        /*-----------------------------------------------------------*/
+
 
 
                /*---------------------Oda Charge ------------------------*/
                                  /*oda_min[$value]*/
                                  /*oda_pkg[$value]*/
 
-				if($isods_D_pin[$value]==0){
+				if($isods_D_pin[$value]!=1 or $isods_P_pin[$value]!=1){
+				       $total_oda=$oda_pkg[$value]+$spyderplan->oda_pkg; 	
+				       $total_oda_min=$oda_pkg[$value]+$spyderplan->oda_min; 	
+
+                  $oda=$total_oda*$weight;
+
+                  $oda=$oda>$total_oda_min?$oda:$total_oda_min;  
+                  $air_price[$value]=$air_price[$value]+$oda;
+                  $sur_price[$value]=$sur_price[$value]+$oda;
+				}else{
+
 					$air_price[$value]=$air_price[$value]+0;
 					$sur_price[$value]=$sur_price[$value]+0;
-				}else{
-				  $oda=$oda_pkg[$value]*$weight;
-
-				  $oda=$oda>$oda_min[$value]?$oda:$oda_min[$value];  
-
-				  $air_price[$value]=$air_price[$value]+$oda;
-				  $sur_price[$value]=$sur_price[$value]+$oda;
 
 				 
 				}
@@ -190,19 +260,63 @@ $vendor_serviceable=array_intersect($pickup_serviceable,$delivery_serviceable);
                 /*-----------------------------------------------------------------*/
 
 
+/*-------------------------------- Insurance  --------------------------------------*/
+/*$risk_kg
+$risk_min
+$spyderrisk_kg
+$spyderrisk_min
+
+*/
+
+/*print_r($spyderrisk_kg);
+dd($spyderrisk_min);*/
+
+		$totalrisk_kg=$spyderrisk_kg+$risk_kg[$value];
+		$totalrisk_min=$spyderrisk_min+$risk_min[$value];
+
+				$totalrisk_kg=@$totalrisk_kg*@$declared;
+
+				$totalrisk_kg = $totalrisk_kg/100; 
+
+		 $Insurance=  $totalrisk_min>$totalrisk_kg ? $totalrisk_min: 0;
+
+		      
+		$air_price[$value]=number_format($air_price[$value]+$Insurance,2);
+		$sur_price[$value]=number_format($sur_price[$value]+$Insurance,2);
 
 
-                /*------------------------------GST ---------------------------------*/
-                  
-                  $agst=($air_price[$value]*$gst[$value])/100;
-                  $agst=($sur_price[$value]*$gst[$value])/100;
+/*----------------------------------------------------------------------*/
+
+
+/*----------------------------------COD---------------------------------------------*/
+  
+  if($request->is_cod){
+  	$totalcod=$spyderplan->cod+$all_cod[$value];
+  	$final_cod=@$totalcod*@$declared;
+  	$final_cod = $final_cod/100;   
+  	$air_price[$value]=number_format($air_price[$value]+$final_cod,2);
+  	$sur_price[$value]=number_format($sur_price[$value]+$final_cod,2);
+  }else{
+              /* No Cod*/
+  }
+ 
+
+
+/*-------------------------------------------------------------------------------*/
 
 
 
-			         $air_price[$value]=$air_price[$value]+$agst;
-			         $sur_price[$value]=$sur_price[$value]+$agst;
+    /*------------------------------GST ---------------------------------*/
+      
+      $agst=($air_price[$value]*$gst[$value])/100;
+      $agst=($sur_price[$value]*$gst[$value])/100;
 
-                /*-----------------------------------------------------------------*/
+
+
+         $air_price[$value]=number_format($air_price[$value]+$agst,2);
+         $sur_price[$value]=number_format($sur_price[$value]+$agst,2);
+
+    /*-----------------------------------------------------------------*/
                   
 		   }
 

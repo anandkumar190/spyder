@@ -54,6 +54,9 @@ class ShippingRateCalculator extends Controller
 		$air_price = array();
 		$sur_price = array();
 
+		$all_sur_charges = array();
+		$all_air_charges = array();
+
 		$pickup_serviceable=$this->is_pickup_serviceable($request->pickupcode)->toArray();
          $delivery_serviceable=$this->is_delivery_serviceable($request->deliverycode)->toArray();
 
@@ -200,6 +203,9 @@ $nullhandling=HandlingChargesModel::whereIn('created_by',$vendor_serviceable)->w
 
                  $air_price[$value]=number_format($sur_parce*$weight,2);
                  $sur_price[$value]=number_format($air_parce*$weight,2);
+
+			       $all_sur_charges[$value]['freight']=$sur_price[$value]=$sur_price[$value]>$min_freight[$value] ? $sur_price[$value]:$min_freight[$value];
+			       $all_air_charges[$value]['freight']=$sur_price[$value]=$air_price[$value]>$min_freight[$value] ? $air_price[$value]:$min_freight[$value];
            
                    
 
@@ -215,8 +221,8 @@ $nullhandling=HandlingChargesModel::whereIn('created_by',$vendor_serviceable)->w
                    $air_fuel_surcharge=@$air_price[$value]*@$total_fuel_surcharge;
                    $sur_fuel_surcharge=@$sur_price[$value]*@$total_fuel_surcharge;
 
-                    $air_fuel_surcharge=  $air_fuel_surcharge>0 ? ($air_fuel_surcharge/100) : 0;
-                    $sur_fuel_surcharge= $sur_fuel_surcharge>0 ? ($sur_fuel_surcharge/100) : 0;
+           $all_air_charges[$value]['fuel_surcharge']=$air_fuel_surcharge=$air_fuel_surcharge>0 ? ($air_fuel_surcharge/100) : 0;
+            $all_sur_charges[$value]['fuel_surcharge']= $sur_fuel_surcharge= $sur_fuel_surcharge>0 ? ($sur_fuel_surcharge/100) : 0;
                          
 
                  $air_price[$value]=number_format($air_price[$value]+$air_fuel_surcharge,2);
@@ -228,9 +234,12 @@ $nullhandling=HandlingChargesModel::whereIn('created_by',$vendor_serviceable)->w
 
 
        /*--------------- Docket Charges-----------------------------*/
+
+       $all_sur_charges[$value]['docket_charges'] = $all_air_charges[$value]['docket_charges'] = $total_cn=$docket_charge[$value]+$spyderplan->docket_charge;
+        
                       
-            $air_price[$value]=$air_price[$value]+$docket_charge[$value]+$spyderplan->docket_charge;
-            $sur_price[$value]=$sur_price[$value]+$docket_charge[$value]+$spyderplan->docket_charge;
+            $air_price[$value]=$air_price[$value]+$total_cn;
+            $sur_price[$value]=$sur_price[$value]+$total_cn;
 
         /*-----------------------------------------------------------*/
 
@@ -246,7 +255,7 @@ $nullhandling=HandlingChargesModel::whereIn('created_by',$vendor_serviceable)->w
 
                   $oda=$total_oda*$weight;
 
-                  $oda=$oda>$total_oda_min?$oda:$total_oda_min;  
+    			$all_sur_charges[$value]['docket_charges'] = $all_air_charges[$value]['docket_charges'] = $oda=$oda>$total_oda_min?$oda:$total_oda_min;  
                   $air_price[$value]=$air_price[$value]+$oda;
                   $sur_price[$value]=$sur_price[$value]+$oda;
 				}else{
@@ -278,7 +287,7 @@ dd($spyderrisk_min);*/
 
 				$totalrisk_kg = $totalrisk_kg/100; 
 
-		 $Insurance=  $totalrisk_min>$totalrisk_kg ? $totalrisk_min: 0;
+		   $all_sur_charges[$value]['Insurance'] = $all_air_charges[$value]['Insurance'] = $Insurance=  $totalrisk_min>$totalrisk_kg ? $totalrisk_min: 0;
 
 		      
 		$air_price[$value]=number_format($air_price[$value]+$Insurance,2);
@@ -293,11 +302,13 @@ dd($spyderrisk_min);*/
   if($request->is_cod){
   	$totalcod=$spyderplan->cod+$all_cod[$value];
   	$final_cod=@$totalcod*@$declared;
-  	$final_cod = $final_cod/100;   
+ $all_sur_charges[$value]['cod'] = $all_air_charges[$value]['cod']=$final_cod = $final_cod/100;   
+
   	$air_price[$value]=number_format($air_price[$value]+$final_cod,2);
   	$sur_price[$value]=number_format($sur_price[$value]+$final_cod,2);
   }else{
               /* No Cod*/
+               $all_sur_charges[$value]['cod'] = $all_air_charges[$value]['cod']=0;
   }
  
 
@@ -308,8 +319,8 @@ dd($spyderrisk_min);*/
 
     /*------------------------------GST ---------------------------------*/
       
-      $agst=($air_price[$value]*$gst[$value])/100;
-      $agst=($sur_price[$value]*$gst[$value])/100;
+       $all_air_charges[$value]['Insurance']=$agst=($air_price[$value]*$gst[$value])/100;
+      $all_sur_charges[$value]['Insurance'] =$agst=($sur_price[$value]*$gst[$value])/100;
 
 
 
@@ -322,6 +333,12 @@ dd($spyderrisk_min);*/
 
 		   $vendorname=User::select('company_name','id')->whereIn('id',$vendor_serviceable)->pluck('company_name','id');
 
+
+		print_r($air_price);
+		print_r($sur_price);
+
+		print_r($all_air_charges);
+		print_r($all_sur_charges);
 
 
    return view('welcome',compact('air_price','sur_price','vendorname'));
